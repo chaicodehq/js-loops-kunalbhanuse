@@ -31,4 +31,23 @@
  */
 export function sabziMandiBill(shoppingList, priceList) {
   // Your code here
+  if (shoppingList.length <= 0 || Object.keys(priceList).length <= 0) {
+    return { items: [], totalBill: 0 };
+  }
+  const items = [];
+  let totalBill = 0;
+
+  for (let item of shoppingList) {
+    if (!(item.name in priceList)) {
+      continue;
+    }
+    let pricePerKg = priceList[item.name];
+    if (pricePerKg > 80) {
+      continue;
+    }
+    const cost = item.qty * pricePerKg;
+    items.push({ name: item.name, qty: item.qty, cost });
+    totalBill += cost;
+  }
+  return { items, totalBill };
 }
